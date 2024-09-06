@@ -2,10 +2,8 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import {
-  WalletDisconnectButton,
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
+import { WalletButtons } from "../common/WalletButtons";
+import { RequestAirdrop } from "../RequestAirdrop";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -48,15 +46,37 @@ export default function BasicTabs() {
         sx={{
           display: "flex",
           justifyContent: "center",
+          marginTop: "20px",
+          marginBottom: "20px",
         }}
       >
         <Tabs
           value={value}
           onChange={handleChange}
           sx={{
-            ".MuiTab-root": {
-              color: "white",
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#00FFFF",
+              height: "4px",
+              borderRadius: "4px",
             },
+            "& .MuiTab-root": {
+              color: "#B0B0B0", 
+              fontWeight: "bold",
+              padding: "12px 24px",
+              borderRadius: "10px",
+              margin: "0 4px",
+              transition: "background-color 0.3s",
+              "&.Mui-selected": {
+                color: "#00FFFF", 
+                backgroundColor: "#121212",
+              },
+              "&:hover": {
+                backgroundColor: "#333",
+              },
+            },
+            backgroundColor: "#1a1a1a",
+            borderRadius: "10px",
+            boxShadow: "0 0 15px rgba(0, 255, 255, 0.5)",
           }}
         >
           <Tab label="Request Airdrop" {...a11yProps(0)} />
@@ -64,46 +84,31 @@ export default function BasicTabs() {
           <Tab label="Send Sol" {...a11yProps(2)} />
         </Tabs>
       </Box>
+
       <CustomTabPanel value={value} index={0}>
         <Box
           sx={{
             display: "flex",
-            border: "1px solid #ccc",
+            justifyContent: "space-between",
+            alignItems: "stretch",
+            border: "1px solid #333",
+            borderRadius: "15px",
+            padding: "20px",
+            backgroundColor: "#1a1a1a",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flex: "0.3",
-              border: "1px solid #ccc",
-              padding: "20px",
-              justifyContent: "center",
-              alignItems: "center",
-              // height: "50vh",
-              width: "100%",
-            }}
-          >
-            <div>
-              <div
-              style={{ 
-                marginBottom: "50px"
-              }}
-              >
-                <WalletMultiButton />
-              </div>
-              <WalletDisconnectButton />
-            </div>
-          </Box>
+          <WalletButtons />
 
           <Box
             sx={{
               flex: "1",
-              border: "1px solid #ccc",
-              padding: "20px",
+              padding: "50px",
               marginLeft: "20px",
+              backgroundColor: "#121212",
+              boxShadow: "0 0 15px rgba(0, 255, 255, 0.5)",
             }}
           >
-            Request Air Drop
+            <RequestAirdrop />
           </Box>
         </Box>
       </CustomTabPanel>
@@ -114,15 +119,7 @@ export default function BasicTabs() {
             border: "1px solid #ccc",
           }}
         >
-          <Box
-            sx={{
-              flex: "0.3",
-              border: "1px solid #ccc",
-              padding: "20px",
-            }}
-          >
-            Connect and Disconnect
-          </Box>
+          <WalletButtons />
 
           <Box
             sx={{
@@ -143,15 +140,7 @@ export default function BasicTabs() {
             border: "1px solid #ccc",
           }}
         >
-          <Box
-            sx={{
-              flex: "0.3",
-              border: "1px solid #ccc",
-              padding: "20px",
-            }}
-          >
-            Connect and Disconnect
-          </Box>
+          <WalletButtons />
 
           <Box
             sx={{
