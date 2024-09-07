@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react";
 import {
@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
-export const RequestAirdrop: React.FC = () => {
+export const ShowSolBalance: React.FC = () => {
   const wallet = useWallet();
   const { connection } = useConnection();
-  const [amount, setAmount] = useState<string>("");
+  const [text, setText] = useState<any>("");
+  const [solBalance, setSolBalance] = useState<number | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
@@ -24,28 +25,22 @@ export const RequestAirdrop: React.FC = () => {
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
-
-  async function requestAirdrop(): Promise<void> {
-    if (wallet.publicKey && amount) {
-      const solAmount = parseFloat(amount) * LAMPORTS_PER_SOL;
-      try {
-        await connection.requestAirdrop(wallet.publicKey, solAmount);
-        setSnackbarMessage(
-          `Airdropped ${amount} SOL to ${wallet.publicKey.toBase58()}`
-        );
-        setAmount("");
-        setSnackbarSeverity("success");
-        setSnackbarOpen(true);
-      } catch (error) {
-        setAmount("");
-        setSnackbarMessage(`Airdrop failed: ${error}`);
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-      }
+  useEffect(() => {
+    if (wallet.publicKey) {
+      setText(wallet.publicKey.toBase58());
     } else {
-      setSnackbarMessage(
-        "Please enter a valid amount and ensure your wallet is connected."
-      );
+      setText("");
+      setSolBalance(null);
+    }
+  }, [wallet.publicKey]);
+
+  async function showBalance(): Promise<void> {
+    if (wallet.publicKey) {
+      const lamportBalance = await connection.getBalance(wallet.publicKey);
+      const solBalance = lamportBalance / LAMPORTS_PER_SOL;
+      setSolBalance(solBalance);
+    } else {
+      setSnackbarMessage("Ensure your wallet is connected.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -73,17 +68,16 @@ export const RequestAirdrop: React.FC = () => {
           marginBottom: "20px",
         }}
       >
-        Request Airdrop
+        Show Solana Balance
       </Typography>
 
       <TextField
-        id="amount"
-        label="Amount (SOL)"
+        id="text"
         variant="outlined"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        placeholder="Enter SOL amount"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
         fullWidth
+        disabled
         sx={{
           marginBottom: "20px",
           "& .MuiOutlinedInput-root": {
@@ -97,15 +91,31 @@ export const RequestAirdrop: React.FC = () => {
           "& .MuiInputBase-input": {
             color: "white",
           },
-          "& .MuiFormLabel-root": {
+          "& .Mui-disabled": {
             color: "white",
+            "-webkit-text-fill-color": "white",
           },
         }}
       />
 
+      {solBalance !== null && (
+        <Typography
+          variant="h6"
+          sx={{
+            color: "white",
+            fontWeight: "bold",
+            marginTop: "20px",
+          }}
+        >
+          Your Devnet balance is{" "}
+          <span style={{ fontWeight: "bold", color: "#00FFFF" }}>
+            {solBalance.toFixed(4)} SOL
+          </span>
+        </Typography>
+      )}
       <Button
         variant="contained"
-        onClick={requestAirdrop}
+        onClick={showBalance}
         sx={{
           backgroundColor: "#00FFFF",
           color: "#121212",
@@ -117,7 +127,7 @@ export const RequestAirdrop: React.FC = () => {
           },
         }}
       >
-        Request Airdrop
+        Display
       </Button>
 
       <Snackbar
