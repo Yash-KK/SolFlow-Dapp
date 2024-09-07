@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { WalletButtons } from "../common/WalletButtons";
 import { RequestAirdrop } from "../RequestAirdrop";
 import { ShowSolBalance } from "../ShowSolBalance";
+import { SendSol } from "../SendSol";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -38,7 +39,7 @@ export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log('event: ', event);
+    console.log("event: ", event);
     setValue(newValue);
   };
 
@@ -145,7 +146,12 @@ export default function BasicTabs() {
         <Box
           sx={{
             display: "flex",
-            border: "1px solid #ccc",
+            justifyContent: "space-between",
+            alignItems: "stretch",
+            border: "1px solid #333",
+            borderRadius: "15px",
+            padding: "20px",
+            backgroundColor: "#1a1a1a",
           }}
         >
           <WalletButtons />
@@ -153,12 +159,13 @@ export default function BasicTabs() {
           <Box
             sx={{
               flex: "1",
-              border: "1px solid #ccc",
+              padding: "50px",
               marginLeft: "20px",
-              padding: "20px",
+              backgroundColor: "#121212",
+              boxShadow: "0 0 15px rgba(0, 255, 255, 0.5)",
             }}
           >
-            Send Sol
+            <SendSol />
           </Box>
         </Box>
       </CustomTabPanel>
