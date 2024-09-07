@@ -10,8 +10,7 @@ import "./App.css";
 import BasicTabs from "./components/Navbar";
 
 function App() {
-  const alchemyDevnetEndpoint =
-    "https://solana-devnet.g.alchemy.com/v2/QAq5vv2pXwG3I6JhOMEOnhP1MUGKen5s";
+  const alchemyDevnetEndpoint =import.meta.env.VITE_APP_SOLANA_DEVNET_API_URL;
   const endpoint = useMemo(() => alchemyDevnetEndpoint, []);
   return (
     <ConnectionProvider endpoint={endpoint}>
