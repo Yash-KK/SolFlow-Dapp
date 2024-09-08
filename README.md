@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# SolFlow Dapp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SolFlow Dapp** is a decentralized, multi-chain wallet application built on React and TypeScript, with integrated Solana functionalities. This app allows users to request airdrops, check SOL balances, and send SOL transactions directly on the Solana network(Devnet).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Airdrop Requests:** Instantly request airdrops of SOL to a connected wallet.
+- **Check Solana Balance:** View your wallet's balance on Solana's Devnet.
+- **Send SOL:** Transfer SOL between accounts with ease.
+- **Responsive UI:** Styled with Material UI for a seamless Web3 experience.
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** - Front-end library for building user interfaces.
+- **TypeScript** - Typed JavaScript for more robust code.
+- **Material UI** - Pre-built, customizable UI components.
+- **Solana Web3.js** - Solana's JavaScript API for blockchain interactions.
+- **@solana/wallet-adapter-react** - Wallet connection management for Solana.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Clone the repository:
+
+```bash
+git clone https://github.com/Yash-KK/SolFlow-Dapp.git
+cd SolFlow-Dapp
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+
+### Start the development Server:
+
+```bash
+npm run dev
+```
+
+Open your browser at [http://localhost:3000](http://localhost:3000) to view the app.
+
+## Demo Video
+
+Check out the demo of **SolFlow Dapp** in action:
+
+
+https://github.com/user-attachments/assets/905c50c3-345d-477d-b69f-406b66b7d5f6
+
+
+
+
